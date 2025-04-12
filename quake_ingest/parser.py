@@ -7,6 +7,7 @@ def parse_data(data):
     features = data.get("features", [])
     for feature in features:
         container={}
+        container["id"]=feature["id"]
         container["place"]=feature["properties"]["place"]
         container["magnitude"]=feature["properties"]["mag"]
         container["depth"]=feature["geometry"]["coordinates"][2]
@@ -15,8 +16,7 @@ def parse_data(data):
         container["tsunami"]=feature["properties"]["tsunami"]
         timestamp=int(feature["properties"]["time"])
         date_time=datetime.fromtimestamp(timestamp/1000)
-        formatted_time=date_time.strftime("%Y-%m-%d %H:%M:%S")
-        container["occurred_at"]=formatted_time
+        container["occurred_at"]=date_time
         earthquakes_imp.append(container)
     return earthquakes_imp
 
