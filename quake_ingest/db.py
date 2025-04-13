@@ -270,4 +270,35 @@ async def get_earthquakes(limit=10,offset=0,min_magnitude=0):
 
 # When SQLAlchemy executes a query, it returns a "Result" object (essentially a wrapper around your database results)
 # The .scalars() method extracts your actual Earthquake objects from this wrapper
-# The .all() method collects these objects into a Python list
+# The .all() method collects these objects into a Python list 
+
+# Why queries return Python objects, not "database objects"
+# The database itself doesn't return "Python objects" - it returns rows of data. SQLAlchemy does the conversion:
+
+# You call get_earthquakes()
+# SQLAlchemy generates and sends an SQL query to PostgreSQL
+# The database returns rows of data
+# SQLAlchemy converts these rows into Python objects matching your defined Earthquake class
+# Your code then works with these familiar Python objects
+
+# This conversion is exactly what makes ORMs like SQLAlchemy valuable - they handle the translation between database rows and Python objects automatically.
+
+# In db.py, we defined an Earthquake class that inherits from Base - this is the mapping that tells SQLAlchemy how to convert between database records and Python objects.
+
+# The operation where SQLAlchemy converts Python objects into database rows is called "persisting" data to the database. In your code, this happens in the save_earthquakes() function in db.py 
+
+# All SQLAlchemy objects are Python objects
+# Not all Python objects are SQLAlchemy objects 
+
+# class Earthquake(Base):
+#     __tablename__ = "earthquakes"
+#     id = Column(String, primary_key=True)
+#     # other fields...
+
+
+# This creates a special Python class that:
+
+# Is a regular Python class (can be instantiated, has attributes, etc.)
+# Has extra SQLAlchemy features that map it to your database table
+
+# When you query the database with get_earthquakes(), SQLAlchemy returns instances of this class - they're Python objects that have a direct mapping to rows in your database.
