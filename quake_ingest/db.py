@@ -6,13 +6,15 @@ from sqlalchemy import Column, Float, String, Boolean, DateTime, Integer
 import datetime 
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
+from config import current_config
+
 
 load_dotenv()
 password=os.environ.get("DB_PASSWORD")
 
 
 
-DATABASE_URL = f"postgresql+asyncpg://postgres:{password}@localhost:5432/Earthquakes"
+DATABASE_URL = current_config["DATABASE_URL"]
 
 #create the async engine 
 #echo=true will print all SQL statements to console, useful for debugging 

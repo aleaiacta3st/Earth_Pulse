@@ -1,8 +1,12 @@
 import asyncio
 import aiohttp
 from datetime import datetime
+from config import current_config
 
-USGS_FEED_URL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
+
+
+
+USGS_FEED_URL = current_config["USGS_FEED_URL"]
 
 async def fetch_earthquake_data():
     async with aiohttp.ClientSession() as session:

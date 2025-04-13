@@ -2,6 +2,8 @@ from fetcher import fetch_earthquake_data
 from parser import parse_data 
 from db import save_earthquakes, init_db
 import asyncio 
+from config import current_config
+
 
 async def ingest_data_loop():
     try:
@@ -10,7 +12,7 @@ async def ingest_data_loop():
             data=await fetch_earthquake_data()
             parsed_data=parse_data(data)
             await save_earthquakes(parsed_data)
-            await asyncio.sleep(300)
+            await asyncio.sleep(current_config["POLL_INTERVAL"])
     except Exception as e:
         print(f"error: {e}")
         return []
