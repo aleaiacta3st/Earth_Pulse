@@ -1,7 +1,7 @@
 import asyncio
 import aiohttp
 from datetime import datetime
-from config import current_config
+from .config import current_config
 
 
 

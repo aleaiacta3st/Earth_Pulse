@@ -1,6 +1,6 @@
 import asyncio
 from datetime import datetime
-from fetcher import fetch_earthquake_data
+from .fetcher import fetch_earthquake_data
 
 def parse_data(data):
     earthquakes_imp=[]

@@ -6,7 +6,8 @@ from sqlalchemy import Column, Float, String, Boolean, DateTime, Integer
 import datetime 
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
-from config import current_config
+from .config import current_config
+
 
 
 load_dotenv()

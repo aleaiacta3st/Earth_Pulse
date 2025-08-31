@@ -9,4 +9,4 @@ class Earthquake(BaseModel):
     latitude:float
     longitude:float
     tsunami:bool
-    occurred_at:datetime
+    occurred_at:datetime.datetime

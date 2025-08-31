@@ -1,8 +1,8 @@
-from fetcher import fetch_earthquake_data 
-from parser import parse_data 
-from db import save_earthquakes, init_db
+from .fetcher import fetch_earthquake_data 
+from .parser import parse_data 
+from .db import save_earthquakes, init_db
+from .config import current_config
 import asyncio 
-from config import current_config
 
 
 async def ingest_data_loop():

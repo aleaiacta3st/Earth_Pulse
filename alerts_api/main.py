@@ -3,10 +3,10 @@ from pydantic import BaseModel
 from datetime import datetime
 from quake_ingest.db import get_earthquakes
 import asyncio
-from models import Earthquake
+from alerts_api.models import Earthquake
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append("C:/Users/sithota/Desktop/earthpulse")
 
 app=FastAPI()
 
