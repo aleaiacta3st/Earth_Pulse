@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from pydantic import BaseModel
 
 class Earthquake(BaseModel):
@@ -9,4 +9,4 @@ class Earthquake(BaseModel):
     latitude:float
     longitude:float
     tsunami:bool
-    occurred_at:datetime.datetime
+    occurred_at:datetime

@@ -5,8 +5,7 @@ from quake_ingest.db import get_earthquakes
 import asyncio
 from alerts_api.models import Earthquake
 import os
-import sys
-sys.path.append("C:/Users/sithota/Desktop/earthpulse")
+
 
 app=FastAPI()
 
@@ -18,6 +17,17 @@ def health():
 async def alerts(limit: int = 10, offset: int = 0, min_magnitude: float = 0):
     results = await get_earthquakes(limit, offset, min_magnitude)
     return results
+
+from datetime import datetime, timedelta
+
+@app.get("/latest")
+async def get_latest():
+    results = await get_earthquakes(limit=20)
+    return {
+        "retrieved_at": datetime.now().isoformat(),
+        "earthquakes": results,
+        "count": len(results)
+    }
 
 
 

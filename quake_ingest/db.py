@@ -73,15 +73,16 @@ async def init_db():
         await conn.run_sync(Base.metadata.create_all)
 
 
-async def get_earthquakes(limit=10,offset=0,min_magnitude=0):
+async def get_earthquakes(limit=10, offset=0, min_magnitude=0):
     try:
         async with async_session() as session:
-            query=session.query(Earthquake).filter(Earthquake.magnitude >=          min_magnitude)\
-            .order_by(Earthquake.occurred_at.desc())\
-            .offset(offset)\
-            .limit(limit)
-            results =await session.execute(query).scalars().all()
-            return results
+            from sqlalchemy import select
+            query = select(Earthquake).where(Earthquake.magnitude >= min_magnitude)\
+                .order_by(Earthquake.occurred_at.desc())\
+                .offset(offset)\
+                .limit(limit)
+            result = await session.execute(query)
+            return result.scalars().all()
     except Exception as e:
         print(f"Database error: {e}")
         return []
