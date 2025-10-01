@@ -1,6 +1,8 @@
 import streamlit as st
 import requests
 import pandas as pd
+import folium
+from streamlit_folium import st_folium
 
 st.title("🌍 Earth Pulse")
 
@@ -10,7 +12,6 @@ try:
     data = response.json()
     
     if data:
-        # Convert to DataFrame for better display
         df = pd.DataFrame(data)
         
         # Show metrics
@@ -18,6 +19,30 @@ try:
         col1.metric("Total Earthquakes", len(df))
         col2.metric("Avg Magnitude", f"{df['magnitude'].mean():.2f}")
         col3.metric("Max Magnitude", f"{df['magnitude'].max():.2f}")
+        
+        # Create map
+        st.subheader("Earthquake Map")
+        m = folium.Map(location=[20, 0], zoom_start=2)
+        
+        for idx, row in df.iterrows():
+            # Color based on magnitude
+            if row['magnitude'] < 2.5:
+                color = 'green'
+            elif row['magnitude'] < 4.5:
+                color = 'orange'
+            else:
+                color = 'red'
+            
+            folium.CircleMarker(
+                location=[row['latitude'], row['longitude']],
+                radius=row['magnitude'] * 2,
+                popup=f"{row['place']}<br>Magnitude: {row['magnitude']}<br>Depth: {row['depth']} km",
+                color=color,
+                fill=True,
+                fillColor=color
+            ).add_to(m)
+        
+        st_folium(m, width=700, height=500)
         
         # Show data table
         st.subheader("Recent Earthquakes")
