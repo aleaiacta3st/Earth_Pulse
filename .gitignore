@@ -31,3 +31,6 @@ var/
 .vscode/
 *.swp
 *.swo
+
+# Google Drive temp files
+.tmp.driveupload/
