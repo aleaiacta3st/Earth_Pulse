@@ -31,7 +31,7 @@ var/
 .vscode/
 *.swp
 *.swo
-.pdf
+*.pdf
 
 # Google Drive temp files
 .tmp.driveupload/
