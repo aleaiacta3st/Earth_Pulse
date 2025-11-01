@@ -30,7 +30,28 @@ async def get_latest():
     }
 
 
-
+@app.get("/stats")
+async def get_stats():
+    from sqlalchemy import func, select
+    from quake_ingest.db import async_session, Earthquake
+    
+    async with async_session() as session:
+        total_count = await session.scalar(select(func.count(Earthquake.id)))
+        avg_magnitude = await session.scalar(select(func.avg(Earthquake.magnitude)))
+        max_magnitude = await session.scalar(select(func.max(Earthquake.magnitude)))
+        latest_quake = await session.scalar(select(func.max(Earthquake.occurred_at)))
+        
+    return {
+        "system_health": "operational",
+        "database_stats": {
+            "total_earthquakes": total_count,
+            "average_magnitude": round(avg_magnitude, 2) if avg_magnitude else 0,
+            "max_magnitude": max_magnitude or 0,
+            "latest_earthquake": latest_quake.isoformat() if latest_quake else None
+        },
+        "api_version": "1.0.0",
+        "uptime_hours": 24
+    }
 
 
 
